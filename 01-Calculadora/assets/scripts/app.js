@@ -11,6 +11,8 @@ function createAndWriteOutput(operator, resultBeforeCalc, calcNumber) {
   outputResult(currentResult, calcDescription);
 }
 
+function writeToLog(operationIdentifier, prevResult, operationNumber, result) {}
+
 function add() {
   const enteredNumber = getUserNumberInput();
   const initialResult = currentResult;
