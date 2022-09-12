@@ -30,19 +30,13 @@ function calculationResult(calculationType) {
   if (calculationType === 'ADD') {
     currentResult += enteredNumber;
     mathOperator = '+';
-  }
-
-  if (calculationType === 'SUBTRACT') {
+  } else if (calculationType === 'SUBTRACT') {
     currentResult -= enteredNumber;
     mathOperator = '-';
-  }
-
-  if (calculationType === 'MULTIPLY') {
+  } else if (calculationType === 'MULTIPLY') {
     currentResult *= enteredNumber;
     mathOperator = '*';
-  }
-
-  if (calculationType === 'DIVIDE') {
+  } else if (calculationType === 'DIVIDE') {
     currentResult /= enteredNumber;
     mathOperator = '/';
   }
