@@ -3,12 +3,32 @@ const STRONG_ATTACK_VALUE = 17;
 const MONSTER_ATTACK_VALUE = 15;
 const HEALTH_VALUE = 20;
 
-const choseMaxLife = 100;
+let choseMaxLife = 100;
 let currentMonsterHealth = choseMaxLife;
 let currentPlayerHealth = choseMaxLife;
 let hasBonusLife = true;
+let availableLifes = 3;
+
+const enteredValue = prompt(
+  'Ingrese el máximo de vida para el jugador y para el mounstro',
+  '100'
+);
+
+choseMaxLife = parseInt(enteredValue);
+
+if (isNaN(choseMaxLife) || choseMaxLife <= 0) {
+  choseMaxLife = 100;
+}
 
 adjustHealthBars(choseMaxLife);
+
+function reset() {
+  currentMonsterHealth = choseMaxLife;
+  currentPlayerHealth = choseMaxLife;
+  hasBonusLife = true;
+  availableLifes = 3;
+  resetGame(choseMaxLife);
+}
 
 function endRound() {
   const initialPlayerHealth = currentPlayerHealth;
@@ -28,6 +48,14 @@ function endRound() {
     alert('Monster win');
   } else if (currentPlayerHealth <= 0 && currentMonsterHealth <= 0) {
     alert('Draw');
+  }
+
+  if (
+    (currentMonsterHealth <= 0 && currentPlayerHealth > 0) ||
+    (currentPlayerHealth <= 0 && currentMonsterHealth > 0) ||
+    (currentMonsterHealth <= 0 && currentPlayerHealth <= 0)
+  ) {
+    reset();
   }
 }
 
@@ -54,12 +82,18 @@ function strongAttackHandler() {
 }
 
 function healPlayerHandler() {
-  if (currentPlayerHealth <= 0 || currentMonsterHealth <= 0) {
+  if (currentPlayerHealth <= 0 || currentMonsterHealth <= 0 || !hasBonusLife) {
     return;
   }
 
-  hasBonusLife = false;
-  removeBonusLife();
+  if (availableLifes > 0) {
+    availableLifes--;
+
+    if (!availableLifes) {
+      hasBonusLife = false;
+      removeBonusLife();
+    }
+  }
 
   let healthValue;
   if (currentPlayerHealth >= choseMaxLife - HEALTH_VALUE) {
