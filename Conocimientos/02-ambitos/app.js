@@ -1,19 +1,17 @@
-const age = 10;
+const username = 'Andrea';
 
-//console.log(age);
-
-function printAge() {
-  const lastname = "García";
-  console.log(age);
+function printInfoUser() {
+  const age = 13;
+  console.log('nombre', username);
+  console.log('age', age);
 }
 
-//console.log(lastname);
+printInfoUser();
+//console.log('age out function', age);
 
-printAge();
-
-if (age === 10) {
-  const year = 2022;
-  console.log("sí es 10");
+if (username === 'Andrea') {
+  const lastname = 'Hidalgo';
+  console.log(`Fullname is ${username} ${lastname}`);
 }
 
-console.log(year);
+console.log('lastname', lastname);

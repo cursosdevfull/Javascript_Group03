@@ -13,6 +13,7 @@ const LOG_EVENT_PLAYER_HEALTH = 'PLAYER_HEALTH';
 const LOG_EVENT_GAME_OVER = 'GAME_OVER';
 
 const MAX_LIFE = 100;
+const DEFAULT_LIFES = 100;
 const MAX_AVAILABLE_LIFE = 3;
 
 let choseMaxLife;
@@ -30,26 +31,44 @@ function getMaxLifesValues() {
   const parsed = parseInt(enteredValue);
 
   if (isNaN(parsed) || parsed <= 20) {
-    throw new Error('Valor incorrecto');
+    throw { msg: 'Valor inválido ingresado por el usuario' };
   }
 
   return parsed;
+}
+
+function getAvailableLifes() {
+  const enteredValueAvailableLifes = prompt(
+    'Ingrese la cantidad de bonus disponible',
+    MAX_AVAILABLE_LIFE
+  );
+  availableLifes = parseInt(enteredValueAvailableLifes);
+
+  if (isNaN(availableLifes) || availableLifes < 2 || availableLifes > 4) {
+    throw { msg: 'Valor de vidas disponibles no válido' };
+  }
+
+  return availableLifes;
 }
 
 try {
   choseMaxLife = getMaxLifesValues();
 } catch (error) {
   console.log(error);
+  choseMaxLife = DEFAULT_LIFES;
+  alert(
+    `Ocurrió un error y se usará el valor por defecto de ${choseMaxLife} para las vidas`
+  );
 }
 
-const enteredValueAvailableLifes = prompt(
-  'Ingrese la cantidad de bonus disponible',
-  MAX_AVAILABLE_LIFE
-);
-availableLifes = parseInt(enteredValueAvailableLifes);
-
-if (isNaN(availableLifes) || availableLifes < 2 || availableLifes > 4) {
+try {
+  availableLifes = getAvailableLifes();
+} catch (err) {
+  console.log(err);
   availableLifes = MAX_AVAILABLE_LIFE;
+  alert(
+    'Ocurrió un error y se usará el valor por defecto de ${availableLifes} para las "vidas disponibles"'
+  );
 }
 
 let currentMonsterHealth = choseMaxLife;
