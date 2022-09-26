@@ -1,4 +1,12 @@
-function getPlayerChoice() {
+const ROCK = 'ROCK';
+const PAPER = 'PAPER';
+const SCISSOR = 'SCISSOR';
+const DEFAULT_PLAYER_CHOICE = 'ROCK';
+const RESULT_DRAW = 'DRAW';
+const RESULT_COMPUTER_WINNER = 'COMPUTER_WINNER';
+const RESULT_PLAYER_WINNER = 'PLAYER_WINNER';
+
+const getPlayerChoice = () => {
   let selection = prompt(
     'You must choice ROCK, PAPER or SCISSOR'
   ).toUpperCase();
@@ -19,13 +27,13 @@ function getPlayerChoice() {
   }
 
   return selection;
-}
+};
 
-function getComputerChoice() {
+const getComputerChoice = () => {
   const randomValue = Math.random();
 
   const selection =
-    randomValue < 0.34 ? 'ROCK' : randomValue < 0.67 ? 'PAPER' : 'SCISSOR';
+    randomValue < 0.34 ? ROCK : randomValue < 0.67 ? PAPER : SCISSOR;
 
   /* if (randomValue < 0.34) {
     selection = 'ROCK';
@@ -36,17 +44,17 @@ function getComputerChoice() {
   } */
 
   return selection;
-}
+};
 
-function getWinner(computerChoice, playerChoice = 'ROCK') {
+const getWinner = (computerChoice, playerChoice = DEFAULT_PLAYER_CHOICE) => {
   const winner =
     computerChoice === playerChoice
-      ? 'DRAW'
-      : (computerChoice === 'ROCK' && playerChoice === 'SCISSOR') ||
-        (computerChoice === 'PAPER' && playerChoice === 'ROCK') ||
-        (computerChoice === 'SCISSOR' && playerChoice === 'PAPER')
-      ? 'COMPUTER_WINNER'
-      : 'PLAYER_WINNER';
+      ? RESULT_DRAW
+      : (computerChoice === ROCK && playerChoice === SCISSOR) ||
+        (computerChoice === PAPER && playerChoice === ROCK) ||
+        (computerChoice === SCISSOR && playerChoice === PAPER)
+      ? RESULT_COMPUTER_WINNER
+      : RESULT_PLAYER_WINNER;
 
   /*  let winner;
 
@@ -67,9 +75,17 @@ function getWinner(computerChoice, playerChoice = 'ROCK') {
   // return "PLAYER_WINNER"
   // return "COMPUTER_WINNER"
   // return "DRAW"
-}
+};
 
-startBtn.addEventListener('click', function () {
+let gameIsRunning = false;
+
+startBtn.addEventListener('click', () => {
+  if (gameIsRunning) {
+    return;
+  }
+
+  gameIsRunning = true;
+
   const playerChoice = getPlayerChoice();
   const computerChoice = getComputerChoice();
 
@@ -82,16 +98,18 @@ startBtn.addEventListener('click', function () {
   }
 
   const message = `Your choice: ${
-    playerChoice || 'ROCK'
+    playerChoice || DEFAULT_PLAYER_CHOICE
   }. The computer's choice: ${computerChoice}. Result = ${
-    winner === 'DRAW'
-      ? 'Empate'
-      : winner === 'COMPUTER_WINNER'
-      ? 'Ganó la computadora'
-      : 'Usted ganó'
+    winner === RESULT_DRAW
+      ? 'Draw'
+      : winner === RESULT_COMPUTER_WINNER
+      ? 'Computer won'
+      : 'You won'
   }`;
 
   alert(message);
+
+  gameIsRunning = false;
 
   /* console.log('PlayerChoice', playerChoice, 'ComputerChoice', computerChoice); */
 });
