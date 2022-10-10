@@ -43,27 +43,24 @@ const courses = [
   },
 ];
 
-const totalStudentsByCourse = courses.map((course) => {
+const getTotalStudentsByCourse = (course) => {
   const obj = { title: course.title, studentsEnrolled: 0 };
 
-  let total = 0;
-  course.schedules.forEach((schedule) => {
-    total = total + schedule.totalStudents;
-  });
+  const total = course.schedules.reduce(
+    (schedule) => total + schedule.totalStudents,
+    0
+  );
 
   obj.studentsEnrolled = total;
 
   return obj;
-});
+};
 
-const sortedByStudentsEnrolled = totalStudentsByCourse.sort(
-  (elementA, elementB) => {
-    if (elementA.studentsEnrolled < elementB.studentsEnrolled) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }
-);
+const sortByQuantityStudentsEnrolled = (elementA, elementB) =>
+  elementA.studentsEnrolled < elementB.studentsEnrolled ? 1 : -1;
+
+const sortedByStudentsEnrolled = courses
+  .map(getTotalStudentsByCourse)
+  .sort(sortByQuantityStudentsEnrolled);
 
 console.log(sortedByStudentsEnrolled);
