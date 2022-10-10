@@ -50,6 +50,29 @@ const courses = [
   },
 ];
 
+const totalStudentsByCourse = courses.map((course) => {
+  const obj = { title: course.title, studentsEnrolled: 0 };
+
+  let total = 0;
+  /* course.schedules.forEach((schedule) => {
+    total = total + schedule.totalStudents;
+  }); */
+
+  /*   for (const schedule of course.schedules) {
+    total = total + schedule.totalStudents;
+  } */
+
+  for (let index = 0; index < course.schedules.length; index++) {
+    total = total + course.schedules[index].totalStudents;
+  }
+
+  obj.studentsEnrolled = total;
+
+  return obj;
+});
+
+console.log(totalStudentsByCourse);
+
 /* const totalStudentsByCourse = [
   { title: 'Angular', studentsEnrolled: 33 },
   { title: 'NodeJS', studentsEnrolled: 81 },
