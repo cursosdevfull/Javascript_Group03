@@ -93,10 +93,12 @@ const newDrinksList = drinks.map((drink) => {
   const ingredients = [];
 
   for (const property of properties) {
-    if (property !== 'drinkId' && drink[property] !== null) {
-      if (drink[property].indexOf('strIngredient') >= 0) {
-        ingredients.push(drink[property]);
-      }
+    if (
+      property !== 'drinkId' &&
+      drink[property] !== null &&
+      property.indexOf('strIngredient') >= 0
+    ) {
+      ingredients.push(drink[property]);
     }
   }
 
